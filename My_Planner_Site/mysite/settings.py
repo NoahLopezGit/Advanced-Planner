@@ -14,7 +14,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+# returns this: WindowsPath('C:/Users/qojuk/Projects/Advanced-Planner/My_Planner_Site')
+# the database is currently dv.sqlite3
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -29,8 +30,11 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-
+#all django applications which are activated in this django instance
+#run py manage.py migrate to create any database tables needed  for these apps
+#running that command modified teh db.sqlite3 file
 INSTALLED_APPS = [
+    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -105,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'UTC' #TODO: we need to set this to our current timezone
 
 USE_I18N = True
 
