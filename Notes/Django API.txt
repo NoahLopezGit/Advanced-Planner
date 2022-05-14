@@ -1,0 +1,41 @@
+py manage.py shell - opens interactive python shell with added django API
+
+----to create a question object in your database---
+from polls.models import Choice, Question - imports model classes?
+Question.objects.all()
+from django.utils import timezone
+q = Question(question_text="What's new?", pub_date=timezone.now())\
+q.save()
+q.id
+q.question_text
+q.pub_date
+
+q.question_text = "What's up?"
+q.save()
+
+Question.objects.all()
+Question.objects.first()
+
+filters can be added to these queries:
+Question.objects.filter(id=1)
+Question.objects.filter(question_text__startswith='What')
+
+Can also be retrieved directly like so:
+q = Question.objects.get(pk=1)
+Question.objects.all()[X]
+
+
+c = Choice(question=a,choice_text="Choice 1")
+    note how a choice is linked to a question here. the question object, a, is passed to the choice question field, which is used to link the choice to that question
+
+
+Creating an admin user
+
+py manage.py createsuperuser
+    Username: admin
+    Email address: admin@example.com
+    Password: **********
+    Password (again): *********
+    Superuser created successfully.
+
+what does this allow?

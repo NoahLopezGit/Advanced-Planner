@@ -1,0 +1,35 @@
+py manage.py migrate - looks at insatalled apps setting and creates any necessary database tables according to mysite.settings 
+    comment-out or delete the appropriate line(s) from INSTALLED_APPS before running migrate. The migrate command will only run migrations for apps in INSTALLED_APPS.
+
+models - single source of info about your data. follows dry principlle (don't repeat yourself)
+    migrations are derived from your models file
+
+py manage.py makemigrations polls - tells django changes have been made to models and you want those changes to be stored as a migration
+    will be stored at polls.migrations.0001_initial (polls/migrations/0001_initial.py)
+
+py manage.py sqlmigrate polls 0001 - prints the SQL commands your model migration will execute when creating databases
+
+py manage.py migrate - executes the databse migrations
+
+remember the three-step guide to making model changes:
+    1.Change your models (in models.py).
+    2.Run python manage.py makemigrations to create migrations   for those changes
+    3.Run python manage.py migrate to apply those changes to the database.
+
+To access on through the sqlite cli just run "sqlite3 yourdatabase.sqlite3" in the directory holding your database
+    make sure you have sqlite3 as env variable otherwise call it explicitly
+
+model methods - methods specified in the model class which act on the model object
+
+This method will return the question_text when the object is used as a string
+    i.e. print(object)
+
+def __str__(self): 
+          return self.question_text
+
+
+This method gets the objects publish date and sees if it was was_published_recently
+def was_published_recently(self):
+    return self.pub_date >= timezone.now() - datetime.timedelta(days=1)
+
+These methods are not fields w/in the classes and do not affect the database when python manage.py migrate is run

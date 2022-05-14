@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 #run py manage.py migrate to create any database tables needed  for these apps
 #running that command modified teh db.sqlite3 file
 INSTALLED_APPS = [
-    'polls.apps.PollsConfig',
+    'polls.apps.PollsConfig', #polls/apps/Class:PollsConfig
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
