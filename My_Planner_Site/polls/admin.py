@@ -1,3 +1,5 @@
-from django.contrib import admin
+from django.contrib import admin 
+from .models import Question
 
-# Register your models here.
+admin.site.register(Question) # Register the Question model with the admin site.
+
