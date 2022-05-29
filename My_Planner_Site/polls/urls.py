@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 
+app_name='polls' #tells {% url 'polls:name' %} that polls points to this app, "Namespacing url names"
 urlpatterns = [
     path('index/', views.index, name='index'),
     # ex: /polls/5/
