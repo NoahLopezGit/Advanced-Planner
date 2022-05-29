@@ -19,8 +19,14 @@ class IndexView(generic.ListView): #IndexView is inheriting attributes of generi
 class DetailView(generic.DetailView): 
     #if this i not specified it will look for template under name of <app name>/<model name>_detail.html; so polls/question_detail.html
     #presumably under the templates directory in polls
+    context_object_name = "myQuestion" 
+
+    #poll/urls.py says value in url is PK, will be used automatically to find question with associated PK
+    #model= Question specifies what table for PK to be used with. Once handler has grabbed our question and loaded it to the question model
+    #it can be accessed and modified directly by the html template under the default given name or whatever we specify in 
+    #context_object_name
     model = Question 
-    template_name = 'polls/detail.html'
+    #template_name = 'polls/detail.html'
 
 
 class ResultsView(generic.DetailView):
