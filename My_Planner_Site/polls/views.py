@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
@@ -11,10 +11,12 @@ from .models import Choice, Question
 class myIndexView(generic.ListView):
     template_name = 'polls/index.html'
     context_object_name = 'latest_question_list'
+    model=Question
 
-    def get_queryset(self):
-        return Question.
-
+    def get_queryset(self): #this defines what django should do with info passed in the url.. will override default
+        #there is probabyl a better way to modify the get_queryset() on a view to take in the url parameters, but also I am not sure why you would want to do this
+        question = get_object_or_404(Question, pk=self.request.get_full_path()[-2]) #this grabs the request and parses for the question Id we specified
+        return [question]
 
 
 class IndexView(generic.ListView): #IndexView is inheriting attributes of generic.ListView
