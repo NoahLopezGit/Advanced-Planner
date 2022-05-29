@@ -8,7 +8,7 @@ from .models import Choice, Question
 
 #notice default views are generated with classes, wheras our custom views are defined under functions
 class IndexView(generic.ListView): #IndexView is inheriting attributes of generic.ListView
-    template_name = 'polls/index.html' #does this not have a default template it looks for ?
+    template_name = 'polls/index.html' #default is  <app name>/<model name>_list.html
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
@@ -20,7 +20,7 @@ class DetailView(generic.DetailView):
     #if this i not specified it will look for template under name of <app name>/<model name>_detail.html; so polls/question_detail.html
     #presumably under the templates directory in polls
     model = Question 
-    #template_name = 'polls/detail.html'
+    template_name = 'polls/detail.html'
 
 
 class ResultsView(generic.DetailView):
@@ -28,8 +28,20 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
-
-
-
 def vote(request, question_id):
-    ... # same as above, no changes needed.
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        # Redisplay the question voting form.
+        return render(request, 'polls/detail.html', {
+            'question': question,
+            'error_message': "You didn't select a choice.",
+        })
+    else:
+        selected_choice.votes += 1
+        selected_choice.save()
+        # Always return an HttpResponseRedirect after successfully dealing
+        # with POST data. This prevents data from being posted twice if a
+        # user hits the Back button. why?
+        return HttpResponseRedirect(reverse('polls:results', args=(question.id,))) #it seems this has more complex handing than just positional logic
